@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <title>Cycle Function Challenge</title>
+</head>
+
+<body style="font-family: Verdana,sans-serif;
+		     font-size: 15px;
+		     line-height: 1.5;">
+    <div class="container" style="width:30%; 
+			border:2px solid #eee; 
+			padding:50px 50px 15px 50px; 
+			margin-left:auto; 
+			margin-right:auto;
+			box-shadow: 0px 10px 1px #ddd, 0 10px 20px #ccc;">
+        <div class="inputs" style="padding-bottom: 15px; margin:auto; width: 100%;">
+            <label>Current No.:</label>
+            <input type="text" id="current" style="float: right;" />
+            </br>
+            </br>
+            <label>Imove: </label>
+            <input type="text" id="imove" style="float: right;" />
+            </br>
+            </br>
+            <label>Start: </label>
+            <input type="text" id="start" style="float: right;" />
+            </br>
+            </br>
+            <label>End: </label>
+            <input type="text" id="end" style="float: right;" />
+            </br>
+            </br>
+        </div>
+        <div id="btn" style="margin-bottom: 15px; text-align:center;">
+            <input type="button" id="btn" style="display: inline-block;
+	    font-weight: 400;
+	    text-align: center;
+	    white-space: nowrap;
+	    vertical-align: middle;
+	    -webkit-user-select: none;
+	    -moz-user-select: none;
+	    -ms-user-select: none;
+	    user-select: none;
+	    border: 1px solid transparent;
+	    padding: .375rem .75rem;
+	    line-height: 1.5;
+	    border-radius: .25rem;
+	    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	    color: #fff;
+	    background-color: #1e7e34;
+        border-color: #1c7430;" onclick="btnClicked()" value="Run Cycle Function">
+        </div>
+        <div style="color:#1e7e34; font-weight: 400; border-bottom: 1px solid #1c7430; text-align: center;">
+            <strong>Result<i style="padding: 5px;" class="fas fa-arrow-right"></i><span id="result" ></span></strong>
+        </div>
+        <div style="text-align: center; width: 100%; word-wrap: break-word; padding-bottom: 15px;">(<span id="generatedArray"></span>)</div>
+        <div id="generatedArray2"></div>
+    </div>
+    <script type="text/javascript">
+    var btnClicked = function() {
+
+        var curr = document.getElementById('current').value;
+        var imo = document.getElementById('imove').value;
+        var st = document.getElementById('start').value;
+        var en = document.getElementById('end').value;
+
+        cycle(curr, imo, st, en);
+
+    }
+
+    function cycle(current, imove, start, end) {
+
+        var initArray = [];
+
+        var currentInt = parseInt(current);
+        var imoveInt = parseInt(imove);
+        var startInt = parseInt(start);
+        var endInt = parseInt(end);
+
+        for (var i = startInt; i <= endInt; i++) {
+            initArray.push(i);
+        }
+
+        var arrayLength = initArray.length;
+        var resultNumber;
+        var resultIndex;
+        var sumIndex = currentInt + imoveInt;
+        var currentIndex = currentInt - startInt;
+
+        console.log('currentIndex:' + currentIndex);
+
+
+        if (initArray.indexOf(sumIndex) !== -1) {
+
+            resultIndex = sumIndex;
+            resultNumber = sumIndex;
+
+        } else if (sumIndex > endInt) {
+
+            resultIndex = ((sumIndex - endInt - 1) % (arrayLength));
+
+            resultNumber = initArray[((resultIndex % arrayLength))];
+
+        } else if (sumIndex < startInt) {
+
+            resultIndex = arrayLength - (Math.abs((sumIndex) - endInt - 1) % arrayLength);
+
+            resultNumber = initArray[((resultIndex % arrayLength))];
+
+        } else { 
+            resultIndex = arrayLength;
+
+            resultNumber = initArray[resultIndex - 1];
+
+        }
+
+        
+        document.getElementById('result').innerHTML = resultNumber;
+
+        var inputArrStr = (initArray).toString();
+        var resultToStr=resultNumber.toString();
+        var resultPosition= inputArrStr.replace(resultToStr,'<span style="color:red; font-weight:bold;">'+resultToStr+'</span>');
+        
+        document.getElementById('generatedArray').innerHTML =resultPosition
+        return resultPosition;
+       
+
+
+    }
+    </script>
+</body>
+
+</html>
